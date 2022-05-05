@@ -1,16 +1,6 @@
 ---
 version: '2'
 services:
-  perforce:
-    image: ambakshi/perforce-server
-    hostname: perforce
-    volumes:
-      - p4depot:/data
-    ports:
-      - "1666:1666"
-    env_file:
-      - ./envfile
-
   gfperforce:
     image: ambakshi/perforce-git-fusion
     hostname: perforce
@@ -23,6 +13,16 @@ services:
       - NAME=gfp4depot
     volumes:
       - gfp4depot:/data
+  p4swarm:
+    image: ambakshi/perforce-swarm
+    hostname: p4swarm
+    ports:
+      - "5320:80"
+      - "5231:443"
+    environment:
+      - NAME=swarm
+    volumes:
+      - p4depot:/data/swarm
 
 volumes:
   p4depot:
